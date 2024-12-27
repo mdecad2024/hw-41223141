@@ -503,7 +503,52 @@ openByGet();
 <p style="padding-left: 30px;">請將操作影片嵌入 ......</p>
 <p style="padding-left: 30px;">所完成的模擬場景與控制程式檔案下載</p>
 <h3>w16_exam3</h3>
-<h1>Final Report</h1>
+<p>請將您所完成的 w16_exam1 或 w16_exam2 組立檔案, 轉入 CoppeliaSim 4.7 rev4 中, 利用 ZMQ RemoteAPI Python 控制程式執行彈珠台發球機構, 並將過程錄製為操作影片,  請以"國立虎尾科技大學機械設計工程系 - 電腦輔助設計與實習 - w16_exam3: 學號" 作為影片標題, 並在影片說明欄位中敘述此一影片的繪製流程與心得, 完成後請將影片上傳至個人 Youtube 帳號中, 並嵌入個人網站中的 "w16_exam3" 頁面.</p>
+<p>完成後請將所完成的發球機構場景與控制程式壓縮為: 學號_w16_exam3.7z, 並以 學號_w16_exam3.7z 提供下載.</p>
+<p></p>
+<p><a href="https://drive.google.com/drive/folders/1a5D2c5NUNED1yBtoVW0KwYMHXb0rupLi?usp=drive_link">41223141_w16_exam3.7z</a></p>
+<p>操作過程影片</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Quq3f5Bq0HA" width="560"></iframe></p>
+<p>零件組立影片</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/fO3FQ0a_vww" width="560"></iframe></p>
+<p><span>ZMQ RemoteAPI Python 控制程式:</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pip install pyzmq cbor keyboard
+from coppeliasim_zmqremoteapi_client import RemoteAPIClient
+import keyboard
+ 
+# Connecting to the CoppeliaSim server
+client = RemoteAPIClient('localhost', 23000)
+ 
+print('Program started')
+sim = client.getObject('sim')
+ 
+# Get the handle for the slider (prismatic joint)
+slider = sim.getObject('/Prismatic_joint')
+ 
+# Starting the simulation
+sim.startSimulation()
+print('Simulation started')
+ 
+# Main control loop
+def main():
+    # Keep running until simulation is stopped
+    while True:
+        if keyboard.is_pressed('w'):  # Move slider to -0.15 position
+            print("w is pressed")
+            sim.setJointTargetPosition(slider, -0.15)
+         
+        if keyboard.is_pressed('s'):  # Reset slider to the original position
+            print("s is pressed")
+            sim.setJointTargetPosition(slider, 0.0)  # Reset to the initial position
+ 
+        if keyboard.is_pressed('q'):  # Stop the simulation when 'q' is pressed
+            print("q is pressed - stopping simulation")
+            sim.stopSimulation()
+            break
+ 
+# Start the main control loop
+main()</pre>
+<p></p><h1>Final Report</h1>
 <p>期末口頭與書面專題報告 (30%)</p>
 <p>期末口頭專題報告影片:</p>
 <p style="padding-left: 30px;">......</p>
